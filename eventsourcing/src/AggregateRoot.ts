@@ -1,6 +1,6 @@
-import CoreAggregateRoot from '@ddd-framework/core/src/AggregateRoot';
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
-import Identity from '@ddd-framework/core/src/Identity';
+import CoreAggregateRoot from '@ddd-framework/core/AggregateRoot';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
+import Identity from '@ddd-framework/core/Identity';
 import Entity from './Entity';
 
 export default abstract class AggregateRoot<

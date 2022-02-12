@@ -1,11 +1,11 @@
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
-import Identity from '@ddd-framework/core/src/Identity';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
+import Identity from '@ddd-framework/core/Identity';
 import AggregateRoot from './AggregateRoot';
 
 /**
  * Event stream of stored Domain Events.
  */
-export class EventStream<Event extends DomainEvent> {
+export default class EventStream<Event extends DomainEvent> {
   /**
    * Version of the event stream returned.
    */

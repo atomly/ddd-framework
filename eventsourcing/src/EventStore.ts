@@ -1,7 +1,7 @@
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
-import { EventStore as CoreEventStore } from '@ddd-framework/core/src/EventStore';
-import Identity from '@ddd-framework/core/src/Identity';
-import { EventStream } from './EventStream';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
+import CoreEventStore from '@ddd-framework/core/EventStore';
+import Identity from '@ddd-framework/core/Identity';
+import EventStream from './EventStream';
 
 /**
  * We load Events from the Event Store using the unique identity of the

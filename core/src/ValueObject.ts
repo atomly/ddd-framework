@@ -1,4 +1,4 @@
-import { isEqual, toString } from 'lodash';
+import Lodash from 'lodash';
 
 /**
  * When you care only about the attributes of an element of the model, classify it as
@@ -8,7 +8,7 @@ import { isEqual, toString } from 'lodash';
  */
 export default abstract class ValueObject {
   public equals(object: ValueObject): boolean {
-    return isEqual(this, object);
+    return Lodash.isEqual(this, object);
   }
 
   public notEquals(object: ValueObject): boolean {
@@ -22,7 +22,9 @@ export default abstract class ValueObject {
   }
 
   public toString() {
-    return toString(this);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { equals, notEquals, toJSON, toString, ...rest } = this;
+    return Lodash.toString(rest);
   }
 
   public static Null: ValueObject;

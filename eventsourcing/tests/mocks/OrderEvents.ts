@@ -1,4 +1,4 @@
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
 import OrderId from './OrderId';
 
 export class OrderCreated extends DomainEvent<OrderId> {

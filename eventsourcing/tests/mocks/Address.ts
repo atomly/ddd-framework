@@ -1,4 +1,4 @@
-import ValueObject from '@ddd-framework/core/src/ValueObject';
+import ValueObject from '@ddd-framework/core/ValueObject';
 
 export default class Address extends ValueObject {
   public country: string;

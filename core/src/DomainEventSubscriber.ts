@@ -9,7 +9,7 @@ import DomainEvent from './DomainEvent';
  * and execute modifying command behavior on it. This would violate the
  * "modify-single-aggregate-instance-in-single-transaction" rule of thumb.
  */
-export interface DomainEventSubscriber {
+export default abstract class DomainEventSubscriber {
   /**
    * Subscriber event handlers should implement single-responsibility components such
    * as sending notifications after an event happened, storing the Event in an Event
@@ -21,7 +21,9 @@ export interface DomainEventSubscriber {
    * Idempotency is recommended to handle event duplication, but to be
    * idempotent can be difficult, impractical, or even impossible.
    */
-  handleEvent(event: DomainEvent): Promise<void>;
+  public abstract handleEvent(event: DomainEvent): Promise<void>;
 
-  subscribedToeventType(): Promise<typeof DomainEvent['eventType'][]>;
+  public abstract subscribedToeventType(): Promise<
+    typeof DomainEvent['eventType'][]
+  >;
 }

@@ -1,5 +1,5 @@
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
-import Identity from '@ddd-framework/core/src/Identity';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
+import Identity from '@ddd-framework/core/Identity';
 
 export class PictureCreated extends DomainEvent<Identity> {
   public pictureId: string;

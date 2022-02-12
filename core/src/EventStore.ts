@@ -15,11 +15,11 @@ import DomainEvent from './DomainEvent';
  * - Given an application of the preceding point, undo blocks of changes to an
  * Aggregate.
  */
-export interface EventStore {
+export default abstract class EventStore {
   /**
    * Append the DomainEvent to the end of the actual Event Store.
    * It is recommended to first serialize the DomainEvent into a StoreEvent.
    * @param aDomainEvent - Aggregate or Entity DomainEvent.
    */
-  append(aDomainEvent: DomainEvent): Promise<void>;
+  public abstract append(aDomainEvent: DomainEvent): Promise<void>;
 }

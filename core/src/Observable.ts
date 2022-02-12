@@ -11,7 +11,7 @@ type Observed<Thing extends object> = Thing & {
   __observers: Observer<Thing>[];
 };
 
-export class Observable {
+export default class Observable {
   /**
    * Injects into the decorated class, then sets and starts the observers of its decorated properties in the constructor.
    */

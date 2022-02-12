@@ -1,5 +1,5 @@
-import { ClassOf } from './ClassOf';
-import DomainEvent, { DomainEventMetadata } from '../DomainEvent';
+import { ClassOf } from './utils/ClassOf';
+import DomainEvent, { DomainEventMetadata } from './DomainEvent';
 
 type DomainEventMetadataIndexes = Omit<DomainEventMetadata, 'occurredOn'>;
 

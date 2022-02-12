@@ -1,4 +1,4 @@
-import Identity from '@ddd-framework/core/src/Identity';
+import Identity from '@ddd-framework/core/Identity';
 import { Action } from '../../src/Action';
 import Entity from '../../src/Entity';
 import * as Events from './PictureEvents';

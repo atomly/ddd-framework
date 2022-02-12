@@ -1,5 +1,5 @@
 import faker from '@faker-js/faker';
-import Identity from '@ddd-framework/core/src/Identity';
+import Identity from '@ddd-framework/core/Identity';
 import Picture from './mocks/Picture';
 import * as Events from './mocks/PictureEvents';
 

@@ -2,12 +2,22 @@
   "name": "@ddd-framework/core",
   "version": "0.0.0",
   "license": "MIT",
-  "files": [
-    "dist/",
-    "README.md"
-  ],
+  "exports": {
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": { "*": ["./dist/*.d.ts", "./dist/index.d.ts"] }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc --project tsconfig.build.json"
+    "dev": "yarn watch",
+    "build": "tsc --project tsconfig.build.json",
+    "watch": "tsc --project tsconfig.build.json --watch"
   },
   "devDependencies": {
     "@faker-js/faker": "6.0.0-alpha.5",

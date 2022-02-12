@@ -1,6 +1,6 @@
-import CoreEntity from '@ddd-framework/core/src/Entity';
-import DomainEvent from '@ddd-framework/core/src/DomainEvent';
-import Identity from '@ddd-framework/core/src/Identity';
+import CoreEntity from '@ddd-framework/core/Entity';
+import DomainEvent from '@ddd-framework/core/DomainEvent';
+import Identity from '@ddd-framework/core/Identity';
 import { Action } from './Action';
 
 export default abstract class Entity<
