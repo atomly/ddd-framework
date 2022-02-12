@@ -9,18 +9,20 @@ import { EventStream } from './EventStream';
  *
  * @extends Foo
  */
-export interface EventStore extends Omit<CoreEventStore, 'append'> {
+export default abstract class EventStore
+  implements Omit<CoreEventStore, 'append'>
+{
   /**
    * Loads all events of a stream.
    */
-  loadEventStream<Event extends DomainEvent>(
+  public abstract loadEventStream<Event extends DomainEvent>(
     anId: Identity
   ): PromiseLike<EventStream<Event>>;
 
   /**
    * Loads subset of events of a stream.
    */
-  loadEventStream<Event extends DomainEvent>(
+  public abstract loadEventStream<Event extends DomainEvent>(
     anId: Identity,
     skipEvents: number,
     maxCount: number
@@ -31,7 +33,7 @@ export interface EventStore extends Omit<CoreEventStore, 'append'> {
    * exception if the stream version is not the expected version in
    * the store.
    */
-  appendToEventStream<Stream extends EventStream<DomainEvent>>(
+  public abstract appendToEventStream<Stream extends EventStream<DomainEvent>>(
     anId: Identity,
     version: Stream['version'],
     events: Stream['events']

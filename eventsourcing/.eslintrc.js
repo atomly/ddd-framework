@@ -1,1 +1,1 @@
-module.exports = require('../../eslint/backend-preset');
+module.exports = require('../../../eslint/backend-preset');

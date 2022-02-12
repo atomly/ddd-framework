@@ -2,6 +2,13 @@
   "name": "@ddd-framework/core",
   "version": "0.0.0",
   "license": "MIT",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json"
+  },
   "devDependencies": {
     "@faker-js/faker": "6.0.0-alpha.5",
     "@types/jest": "27.4.0",
