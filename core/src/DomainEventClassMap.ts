@@ -52,16 +52,15 @@ class __DomainEventClassMap<DomainEventClasses extends DomainEventClass[]>
     });
   }
 
-  public getDomainEventClassBy(
-    aDomainEventMetadata: DomainEventMetadataIndexes
-  ): Unpack<DomainEventClasses> | null {
+  public getDomainEventClassBy({
+    eventType,
+    eventVersion
+  }: DomainEventMetadataIndexes): Unpack<DomainEventClasses> | null {
     const self = this as Record<PropertyKey, any>;
 
-    const event =
-      self[aDomainEventMetadata.eventVersion] &
-      self[aDomainEventMetadata.eventVersion][aDomainEventMetadata.eventType];
+    const event = (self[eventType] && self[eventType][eventVersion]) || null;
 
-    return (event || null) as Unpack<DomainEventClasses> | null;
+    return event as Unpack<DomainEventClasses> | null;
   }
 }
 

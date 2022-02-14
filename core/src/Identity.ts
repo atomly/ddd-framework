@@ -11,5 +11,9 @@ export default abstract class Identity extends ValueObject {
     this.value = id;
   }
 
+  public toString() {
+    return this.value;
+  }
+
   public static Null: Identity;
 }
