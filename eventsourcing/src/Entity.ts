@@ -1,12 +1,12 @@
-import CoreEntity from '@ddd-framework/core/Entity';
+import BaseEntity from '@ddd-framework/core/Entity';
 import DomainEvent from '@ddd-framework/core/DomainEvent';
 import Identity from '@ddd-framework/core/Identity';
-import { Action } from './Action';
+import { Action } from './utils/Action';
 
 export default abstract class Entity<
   Id extends Identity = Identity,
   EntityEvent extends DomainEvent = DomainEvent
-> extends CoreEntity<Id> {
+> extends BaseEntity<Id> {
   private readonly applier: Action<EntityEvent>;
 
   constructor(applier: Action<EntityEvent>) {

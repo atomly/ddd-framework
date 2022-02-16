@@ -1,5 +1,5 @@
 import Identity from '@ddd-framework/core/Identity';
-import { Action } from '../../src/Action';
+import { Action } from '../utils/Action';
 import Entity from '../../src/Entity';
 import * as Events from './PictureEvents';
 import PictureId from './PictureId';

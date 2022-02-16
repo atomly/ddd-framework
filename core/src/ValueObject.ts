@@ -15,10 +15,8 @@ export default abstract class ValueObject {
     return !this.equals(object);
   }
 
-  public toString() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { equals, notEquals, toString, ...rest } = this;
-    return Lodash.toString(rest);
+  public static isValueObject(obj: unknown): obj is ValueObject {
+    return obj instanceof ValueObject;
   }
 
   public static Null: ValueObject;

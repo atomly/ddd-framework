@@ -20,14 +20,20 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "yarn watch",
     "build": "tsc --project tsconfig.build.json",
+    "dev": "yarn watch",
+    "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./dist",
+    "test": "yarn jest",
     "watch": "tsc --project tsconfig.build.json --watch"
+  },
+  "dependencies": {
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@faker-js/faker": "6.0.0-alpha.5",
     "@types/jest": "27.4.0",
     "@types/lodash": "4.14.178",
+    "@types/uuid": "8.3.4",
     "jest": "27.4.7",
     "lodash": "4.17.21",
     "ts-jest": "27.1.3",

@@ -1,15 +1,8 @@
 import faker from '@faker-js/faker';
 import AggregateRoot from '../src/AggregateRoot';
-import ValueObject from '../src/ValueObject';
+import Uuid from '../src/Uuid';
 
-class UserId extends ValueObject {
-  value: string;
-
-  constructor(id: string) {
-    super();
-    this.value = id;
-  }
-}
+class UserId extends Uuid {}
 
 class User extends AggregateRoot<UserId> {
   public id: UserId;

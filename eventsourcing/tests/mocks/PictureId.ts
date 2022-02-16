@@ -1,5 +1,3 @@
-import Identity from '@ddd-framework/core/Identity';
+import Uuid from '@ddd-framework/core/Uuid';
 
-export default class PictureId extends Identity {
-  public static Null = new PictureId('');
-}
+export default class PictureId extends Uuid {}

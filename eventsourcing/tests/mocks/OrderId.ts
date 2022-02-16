@@ -1,5 +1,3 @@
-import Identity from '@ddd-framework/core/Identity';
+import Uuid from '@ddd-framework/core/Uuid';
 
-export default class OrderId extends Identity {
-  public static Null = new OrderId('');
-}
+export default class OrderId extends Uuid {}

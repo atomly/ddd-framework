@@ -44,6 +44,6 @@ type TransformToDTO<T> = IsFunction<T> extends true
  * Useful for object/class initializers or data-centric operations.
  */
 export type DataTransferObject<
-  T,
-  K extends keyof ExcludeFunctionsOf<T> = never
-> = Omit<TransformToDTO<T>, K>;
+  Type,
+  Keys extends keyof ExcludeFunctionsOf<Type> = never
+> = Omit<TransformToDTO<Type>, Keys>;

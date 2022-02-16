@@ -33,10 +33,4 @@ describe('ValueObject', () => {
     expect(fiveDollars.toString()).toBe('$5');
     expect(fiveEuros.toString()).toBe('€5');
   });
-
-  test('money to JSON', () => {
-    expect(fiveDollars.toJSON()).toBe(
-      '{"amount":5,"currency":"{\\"currencyCode\\":\\"USD\\",\\"currencySymbol\\":\\"$\\",\\"decimalPlaces\\":2,\\"isCurrencyPrefix\\":true}"}'
-    );
-  });
 });

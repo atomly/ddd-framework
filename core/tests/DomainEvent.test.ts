@@ -1,10 +1,8 @@
 import faker from '@faker-js/faker';
 import DomainEvent from '../src/DomainEvent';
-import Identity from '../src/Identity';
+import Uuid from '../src/Uuid';
 
-class OrderId extends Identity {
-  public static Null = new OrderId('');
-}
+class OrderId extends Uuid {}
 
 describe('DomainEvent', () => {
   const date = faker.date.recent();

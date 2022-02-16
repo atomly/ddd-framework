@@ -1,5 +1,5 @@
 import assert from 'assert';
-import _ from 'lodash';
+import Guard from './Guard';
 import Identity from './Identity';
 
 export type DomainEventMetadata = {
@@ -29,12 +29,12 @@ export default abstract class DomainEvent<
     const Constructor = this.constructor as typeof DomainEvent;
 
     assert(
-      !DomainEvent.isBlank(Constructor.eventType),
+      !Guard.isEmpty(Constructor.eventType),
       `[${this.constructor.name}] Static property "eventType" needs to be defined to initiate the event metadata.`
     );
 
     assert(
-      !DomainEvent.isBlank(Constructor.eventVersion),
+      !Guard.isEmpty(Constructor.eventVersion),
       `[${this.constructor.name}] Static property "eventVersion" needs to be defined to initiate the event metadata.`
     );
 
@@ -48,13 +48,4 @@ export default abstract class DomainEvent<
   public static readonly eventType: DomainEventMetadata['eventType'];
 
   public static readonly eventVersion: DomainEventMetadata['eventVersion'];
-
-  /**
-   * Checks if `value` is `null`, `undefined`, `NaN`, or an empty string.
-   * @param value The value to check.
-   * @returns Returns `true` if `value` is nullish, else `false`.
-   */
-  private static isBlank(value: unknown): boolean {
-    return (_.isEmpty(value) && !_.isNumber(value)) || _.isNaN(value);
-  }
 }

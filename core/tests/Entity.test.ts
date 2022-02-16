@@ -1,15 +1,8 @@
 import faker from '@faker-js/faker';
 import Entity from '../src/Entity';
-import ValueObject from '../src/ValueObject';
+import Uuid from '../src/Uuid';
 
-class UserId extends ValueObject {
-  value: string;
-
-  constructor(id: string) {
-    super();
-    this.value = id;
-  }
-}
+class UserId extends Uuid {}
 
 class User extends Entity<UserId> {
   public id: UserId;

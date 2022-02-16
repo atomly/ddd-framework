@@ -1,4 +1,4 @@
-import CoreAggregateRoot from '@ddd-framework/core/AggregateRoot';
+import BaseAggregateRoot from '@ddd-framework/core/AggregateRoot';
 import DomainEvent from '@ddd-framework/core/DomainEvent';
 import Identity from '@ddd-framework/core/Identity';
 import Entity from './Entity';
@@ -6,7 +6,7 @@ import Entity from './Entity';
 export default abstract class AggregateRoot<
   Id extends Identity = Identity,
   AggregateEvent extends DomainEvent = DomainEvent
-> extends CoreAggregateRoot<Id> {
+> extends BaseAggregateRoot<Id> {
   /**
    * AggreateRoot version incremented every time a state-altering command is
    * executed anywhere inside the Aggregate boundary, no matter how deep.

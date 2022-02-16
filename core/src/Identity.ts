@@ -1,16 +1,9 @@
-import ValueObject from './ValueObject';
+import DomainPrimitive from './DomainPrimitive';
 
 /**
- * Identity `ValueObject` containing unique ID values.
+ * Identity `DomainPrimitive` containing unique ID values.
  */
-export default abstract class Identity extends ValueObject {
-  public value: string;
-
-  constructor(id: string) {
-    super();
-    this.value = id;
-  }
-
+export default abstract class Identity extends DomainPrimitive<string> {
   public toString() {
     return this.value;
   }

@@ -1,7 +1,6 @@
 import faker from '@faker-js/faker';
 import Address from './mocks/Address';
 import Order from './mocks/Order';
-import * as Commands from './mocks/OrderCommands';
 import * as Events from './mocks/OrderEvents';
 import OrderId from './mocks/OrderId';
 import OrderLineId from './mocks/OrderLineId';
@@ -12,11 +11,7 @@ describe('AggregateRoot', () => {
   test('handles event and sets changes', () => {
     const order = new Order();
 
-    const createOrder = new Commands.CreateOrder(
-      new OrderId(faker.datatype.uuid())
-    );
-
-    order.create(createOrder.aggregateId);
+    order.create(OrderId.generate());
 
     const changes = order.getChanges();
 
@@ -29,11 +24,7 @@ describe('AggregateRoot', () => {
 
     expect(order.version).toBe(-1);
 
-    const createOrder = new Commands.CreateOrder(
-      new OrderId(faker.datatype.uuid())
-    );
-
-    order.create(createOrder.aggregateId);
+    order.create(OrderId.generate());
 
     expect(order.version).toBe(0);
   });
@@ -41,11 +32,7 @@ describe('AggregateRoot', () => {
   test('clear changes', () => {
     const order = new Order();
 
-    const createOrder = new Commands.CreateOrder(
-      new OrderId(faker.datatype.uuid())
-    );
-
-    order.create(createOrder.aggregateId);
+    order.create(OrderId.generate());
 
     expect(order.getChanges()).toHaveLength(1);
 
@@ -55,7 +42,7 @@ describe('AggregateRoot', () => {
   });
 
   test('load aggregate from event stream', () => {
-    const orderId = new OrderId(faker.datatype.uuid());
+    const orderId = OrderId.generate();
     const orderLineId = new OrderLineId(faker.datatype.uuid());
 
     // Pretend this comes from an EventStore:
@@ -135,11 +122,7 @@ describe('AggregateRoot', () => {
 
       const order = new Order();
 
-      const createOrder = new Commands.CreateOrder(
-        new OrderId(faker.datatype.uuid())
-      );
-
-      order.create(createOrder.aggregateId);
+      order.create(OrderId.generate());
 
       order.addOrderLine(
         new OrderLineId(faker.datatype.uuid()),
@@ -199,11 +182,7 @@ describe('AggregateRoot', () => {
   test('invariants are validated', () => {
     const order = new Order();
 
-    const createOrder = new Commands.CreateOrder(
-      new OrderId(faker.datatype.uuid())
-    );
-
-    order.create(createOrder.aggregateId);
+    order.create(OrderId.generate());
     order.addOrderLine(
       new OrderLineId(faker.datatype.uuid()),
       new ProductId(faker.datatype.uuid())

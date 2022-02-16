@@ -22,6 +22,8 @@
   "scripts": {
     "dev": "yarn watch",
     "build": "tsc --project tsconfig.build.json",
+    "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./dist",
+    "test": "yarn jest",
     "watch": "tsc --project tsconfig.build.json --watch"
   },
   "peerDependencies": {
