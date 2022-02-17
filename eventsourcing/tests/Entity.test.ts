@@ -1,5 +1,5 @@
 import faker from '@faker-js/faker';
-import Identity from '@ddd-framework/core/Identity';
+import Uuid from '@ddd-framework/core/Uuid';
 import Picture from './mocks/Picture';
 import * as Events from './mocks/PictureEvents';
 
@@ -138,6 +138,4 @@ describe('Entity', () => {
   });
 });
 
-class AggregateId extends Identity {
-  public static Null = new AggregateId('');
-}
+class AggregateId extends Uuid {}

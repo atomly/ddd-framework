@@ -1,5 +1,5 @@
-import ArgumentOutOfRangeException from '@ddd-framework/core/exceptions/ArgumentOutOfRangeException';
 import ValueObject from '@ddd-framework/core/ValueObject';
+import ArgumentOutOfRangeException from '@ddd-framework/core/exceptions/ArgumentOutOfRangeException';
 
 export default class PictureSize extends ValueObject {
   public width: number;

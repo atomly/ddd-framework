@@ -1,5 +1,5 @@
-export * from './exceptions/index';
-export * from './utils/index';
+export * from './exceptions';
+export * from './utils';
 export { default as AggregateRoot } from './AggregateRoot';
 export { default as Command } from './Command';
 export { default as Contract } from './Contract';

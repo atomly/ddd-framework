@@ -1,14 +1,12 @@
-import Identity from '@ddd-framework/core/Identity';
-import { Action } from '../utils/Action';
+import Uuid from '@ddd-framework/core/Uuid';
+import { Action } from '../../src/utils/Action';
 import Entity from '../../src/Entity';
 import * as Events from './PictureEvents';
 import PictureId from './PictureId';
 import PictureSize from './PictureSize';
 import Uri from './Uri';
 
-class ParentId extends Identity {
-  public static Null = new ParentId('');
-}
+class ParentId extends Uuid {}
 
 export default class Picture extends Entity<PictureId, Events.PictureEvents> {
   public parentId: ParentId = ParentId.Null;
