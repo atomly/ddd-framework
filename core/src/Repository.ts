@@ -6,7 +6,7 @@ export default abstract class Repository<
   DomainObject extends IdentifiedDomainObject<Identity>
 > {
   public abstract getBy(
-    anIdentity: DomainObject
+    anIdentity: DomainObject['id']
   ): PromiseLike<DomainObject | undefined>;
 
   public abstract save(
@@ -18,9 +18,4 @@ export default abstract class Repository<
     anObject: DomainObject,
     aUnitOfWork?: UnitOfWork
   ): PromiseLike<DomainObject>;
-
-  public abstract saveMany?(
-    anAggregateList: DomainObject[],
-    aUnitOfWork?: UnitOfWork
-  ): PromiseLike<DomainObject[]>;
 }

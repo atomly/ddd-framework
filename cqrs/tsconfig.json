@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig/backend.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDirs": [
+      "src",
+      "tests"
+    ]
+  },
+  "include": ["next-env.d.ts", "src", "tests"],
+  "exclude": ["dist", "build", "node_modules"]
+}
