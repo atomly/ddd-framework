@@ -11,6 +11,12 @@ import DomainEvent from './DomainEvent';
  */
 export default abstract class DomainEventSubscriber {
   /**
+   * Registers the subscriber.  When an Event is published, the subscriber is
+   * notified.
+   */
+  public abstract subscribe(...args: unknown[]): Promise<void>;
+
+  /**
    * Subscriber event handlers should implement single-responsibility components such
    * as sending notifications after an event happened, storing the Event in an Event
    * Store, forwarding the Event via a messaging infrastructure, etc.
@@ -21,9 +27,5 @@ export default abstract class DomainEventSubscriber {
    * Idempotency is recommended to handle event duplication, but to be
    * idempotent can be difficult, impractical, or even impossible.
    */
-  public abstract handleEvent(event: DomainEvent): Promise<void>;
-
-  public abstract subscribedToeventType(): Promise<
-    typeof DomainEvent['eventType'][]
-  >;
+  public abstract when(anEvent: DomainEvent): PromiseLike<void>;
 }
