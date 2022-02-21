@@ -17,15 +17,16 @@ export type DomainEventMetadata = {
  * Aggregate state transition values could be helpful to subscribers.
  */
 export default abstract class DomainEvent<
-  AggregateIdentity extends Identity = Identity
+  Id extends Identity = Identity,
+  Version = number
 > {
   public readonly metadata: DomainEventMetadata;
 
-  public readonly aggregateId: AggregateIdentity;
-
-  constructor(aggregateId: AggregateIdentity, occurredOn: Date = new Date()) {
-    this.aggregateId = aggregateId;
-
+  constructor(
+    public readonly aggregateId: Id,
+    public readonly aggregateVersion: Version,
+    occurredOn: Date = new Date()
+  ) {
     const Constructor = this.constructor as typeof DomainEvent;
 
     assert(

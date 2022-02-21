@@ -20,11 +20,11 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
   public shippingAddress: Address = Address.Null;
 
   public create(anId: OrderId): void {
-    this.apply(new Events.OrderCreated(anId));
+    this.apply(new Events.OrderCreated(anId, this.version));
   }
 
   public restart(): void {
-    this.apply(new Events.OrderReset(this.id));
+    this.apply(new Events.OrderReset(this.id, this.version));
   }
 
   public addOrderLine(anOrderLineId: OrderLineId, aProductId: ProductId): void {
@@ -62,19 +62,19 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
   }
 
   public place(): void {
-    this.apply(new Events.OrderPlaced(this.id));
+    this.apply(new Events.OrderPlaced(this.id, this.version));
   }
 
   public ship(): void {
-    this.apply(new Events.OrderShipped(this.id));
+    this.apply(new Events.OrderShipped(this.id, this.version));
   }
 
   public deliver(): void {
-    this.apply(new Events.OrderSentForDelivery(this.id));
+    this.apply(new Events.OrderSentForDelivery(this.id, this.version));
   }
 
   public markOrderAsDelivered(): void {
-    this.apply(new Events.OrderDelivered(this.id));
+    this.apply(new Events.OrderDelivered(this.id, this.version));
   }
 
   protected validateInvariants(): void {
@@ -102,6 +102,7 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
   }
 
   protected when(event: Events.OrderEvents): void {
+    this.version = event.aggregateVersion;
     if (event instanceof Events.OrderCreated) {
       this.id = event.aggregateId;
       this.state = OrderState.Shopping;

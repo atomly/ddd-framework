@@ -12,7 +12,7 @@ export default abstract class AggregateRoot<
    * executed anywhere inside the Aggregate boundary, no matter how deep.
    * Can be used to implement Optimistic Concurrency.
    */
-  public version: number = -1;
+  public version: number = 0;
 
   /**
    * Uncommited changes to the state are expressed as new Events, and are

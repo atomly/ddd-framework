@@ -1,7 +1,7 @@
 import DomainEvent from '@ddd-framework/core/DomainEvent';
 import Projection from './Projection';
 
-export default abstract class ProjectionManager {
+export default abstract class Projector {
   protected abstract readonly projections: Projection[];
 
   public abstract start(): PromiseLike<void>;
