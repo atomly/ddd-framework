@@ -1,5 +1,9 @@
 import DomainEvent from './DomainEvent';
 
+export type Consumer<KnownEvent extends DomainEvent = DomainEvent> = (
+  anEvent: KnownEvent
+) => PromiseLike<void>;
+
 /**
  * The subscriber may be any component that can subscribe to Events
  * published by Aggregates.
@@ -10,18 +14,23 @@ import DomainEvent from './DomainEvent';
  */
 export default abstract class DomainEventSubscriber {
   /**
-   * Registers the subscriber.  When an Event is published, the subscriber is
+   * Subscribes the consumer to sent event type(s).  When an Event is published, the consumer is
    * notified.
-   */
-  public abstract subscribe(...args: unknown[]): Promise<void>;
-
-  /**
-   * Subscriber event handlers should implement single-responsibility components such
-   * as sending notifications after an event happened, storing the Event in an Event
-   * Store, forwarding the Event via a messaging infrastructure, etc.
    *
    * Idempotency is recommended to handle event duplication, but to be
    * idempotent can be difficult, impractical, or even impossible.
+   *
+   * @returns the Consumer reference.
    */
-  public abstract when(anEvent: DomainEvent): PromiseLike<void>;
+  public abstract subscribe<KnownEvent extends DomainEvent = DomainEvent>(
+    toAnEventType: KnownEvent['metadata']['eventType'],
+    aConsumer: Consumer<KnownEvent>
+  ): PromiseLike<Consumer<KnownEvent>>;
+
+  /**
+   * Unsubscribes a consumber from published Domain Events.
+   */
+  public abstract unsubscribe<KnownEvent extends DomainEvent = DomainEvent>(
+    aConsumer: Consumer<KnownEvent>
+  ): PromiseLike<void>;
 }

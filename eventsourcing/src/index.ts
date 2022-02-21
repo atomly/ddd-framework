@@ -6,3 +6,4 @@ export { default as EventStore } from './EventStore';
 export { default as EventStream } from './EventStream';
 export { default as Projection } from './Projection';
 export { default as Projector } from './Projector';
+export { default as Snapshot } from './Snapshot';

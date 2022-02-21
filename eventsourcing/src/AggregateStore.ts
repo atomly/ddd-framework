@@ -22,7 +22,7 @@ export default abstract class AggregateStore {
   ): PromiseLike<Aggregate>;
 
   /**
-   * Checks if an Aggregate exist by checking if the stream exists.
+   * Checks if an Aggregate exists by checking if the stream exists.
    */
   public abstract exists<Id extends Identity>(anId: Id): PromiseLike<boolean>;
 }

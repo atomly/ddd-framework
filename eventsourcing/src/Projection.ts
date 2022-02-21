@@ -7,27 +7,21 @@ import DomainEvent from '@ddd-framework/core/DomainEvent';
  * subscribers that are used to generate and update a persistent Read Model.
  */
 export default abstract class Projection<
+  Id extends Identity = Identity,
   ProjectedEvent extends DomainEvent = DomainEvent
-> extends IdentifiedDomainObject<Identity> {
+> extends IdentifiedDomainObject<Id> {
   /**
-   * Project the event(s) into the Read Model by transforming the data.
+   * Project the event(s) into the Read Model Projection by transforming the data.
    */
-  public transform(anEvent: ProjectedEvent): void;
-  public transform(anEventList: ProjectedEvent[]): void;
-  public transform(arg: ProjectedEvent | ProjectedEvent[]): void {
-    if (Array.isArray(arg)) for (const event of arg) this.apply(event);
-    else this.apply(arg);
+  public project(anEvent: ProjectedEvent): void;
+  public project(anEventList: ProjectedEvent[]): void;
+  public project(anEventStream: ProjectedEvent | ProjectedEvent[]): void {
+    if (Array.isArray(anEventStream)) anEventStream.forEach(this.when);
+    else this.when(anEventStream);
   }
 
   /**
-   * Used to mutate the current state of the Read Model by handling the event.
-   */
-  protected apply(anEvent: ProjectedEvent): void {
-    return this.when(anEvent);
-  }
-
-  /**
-   * When an Event happens, transform the Read Model.
+   * When an Event happens, transform the data.
    */
   protected abstract when(anEvent: ProjectedEvent): void;
 }
