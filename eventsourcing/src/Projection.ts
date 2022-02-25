@@ -1,5 +1,8 @@
-import Identity from '@ddd-framework/core/Identity';
-import IdentifiedDomainObject from '@ddd-framework/core/IdentifiedDomainObject';
+import {
+  IdentifiedDomainObject,
+  Identity,
+  Repository
+} from '@ddd-framework/core';
 import DomainEvent from '@ddd-framework/core/DomainEvent';
 
 /**
@@ -7,21 +10,20 @@ import DomainEvent from '@ddd-framework/core/DomainEvent';
  * subscribers that are used to generate and update a persistent Read Model.
  */
 export default abstract class Projection<
-  Id extends Identity = Identity,
-  ProjectedEvent extends DomainEvent = DomainEvent
-> extends IdentifiedDomainObject<Id> {
+  ProjectedEvent extends DomainEvent = DomainEvent,
+  View extends IdentifiedDomainObject<Identity> = IdentifiedDomainObject<Identity>
+> {
+  protected abstract repository: Repository<View>;
+
   /**
-   * Project the event(s) into the Read Model Projection by transforming the data.
+   * Apply the event into the Read Model Projection by transforming the data.
    */
-  public project(anEvent: ProjectedEvent): void;
-  public project(anEventList: ProjectedEvent[]): void;
-  public project(anEventStream: ProjectedEvent | ProjectedEvent[]): void {
-    if (Array.isArray(anEventStream)) anEventStream.forEach(this.when);
-    else this.when(anEventStream);
+  public async project(anEvent: ProjectedEvent): Promise<void> {
+    return await this.when(anEvent);
   }
 
   /**
    * When an Event happens, transform the data.
    */
-  protected abstract when(anEvent: ProjectedEvent): void;
+  protected abstract when(anEvent: ProjectedEvent): Promise<void>;
 }

@@ -1,11 +1,10 @@
 export * from './exceptions';
 export * from './utils';
 export { default as AggregateRoot } from './AggregateRoot';
+export * from './Consumer';
 export { default as DateValue } from './DateValue';
 export { default as DomainEvent } from './DomainEvent';
 export { default as DomainEventClassMap } from './DomainEventClassMap';
-export { default as DomainEventPublisher } from './DomainEventPublisher';
-export { default as DomainEventSubscriber } from './DomainEventSubscriber';
 export { default as DomainPrimitive } from './DomainPrimitive';
 export { default as Entity } from './Entity';
 export { default as EventStore } from './EventStore';

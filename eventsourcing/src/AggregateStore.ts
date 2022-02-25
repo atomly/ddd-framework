@@ -11,7 +11,7 @@ export default abstract class AggregateStore {
    */
   public abstract save<Aggregate extends AggregateRoot>(
     anAggregate: Aggregate
-  ): PromiseLike<void>;
+  ): Promise<Aggregate>;
 
   /**
    * Loads an aggregate from all events of a stream.
@@ -19,10 +19,10 @@ export default abstract class AggregateStore {
   public abstract load<Aggregate extends AggregateRoot>(
     anId: Identity,
     anAggregate: Aggregate
-  ): PromiseLike<Aggregate>;
+  ): Promise<Aggregate>;
 
   /**
    * Checks if an Aggregate exists by checking if the stream exists.
    */
-  public abstract exists<Id extends Identity>(anId: Id): PromiseLike<boolean>;
+  public abstract exists<Id extends Identity>(anId: Id): Promise<boolean>;
 }

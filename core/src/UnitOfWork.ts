@@ -1,7 +1,7 @@
 export default abstract class UnitOfWork {
-  public abstract start?(): PromiseLike<void>;
+  public abstract start?(): Promise<void>;
 
-  public abstract commit(): PromiseLike<void>;
+  public abstract commit(): Promise<void>;
 
-  public abstract rollback(): PromiseLike<void>;
+  public abstract rollback(): Promise<void>;
 }

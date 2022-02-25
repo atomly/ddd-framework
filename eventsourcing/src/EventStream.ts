@@ -1,34 +1,14 @@
+import { Readable } from 'stream';
 import DomainEvent from '@ddd-framework/core/DomainEvent';
-import Identity from '@ddd-framework/core/Identity';
-import AggregateRoot from './AggregateRoot';
+import { ReadableStream } from './ReadableStream';
 
 /**
- * Event stream of stored Domain Events.
+ * Event stream of Domain Events.
  */
-export default class EventStream<Event extends DomainEvent> {
-  /**
-   * Version of the event stream returned.
-   */
-  public version: number;
-
-  /**
-   * All events in the stream fetched from the EventStore.
-   */
-  public events: Event[];
-
-  constructor(aggregate: AggregateRoot<Identity, Event>);
-  constructor(version: number, events: Event[]);
-  constructor(arg1: AggregateRoot | number, events?: Event[]) {
-    if (EventStream.isAggregateRoot(arg1)) {
-      this.version = arg1.version;
-      this.events = arg1.getChanges() as Event[];
-    } else {
-      this.version = arg1;
-      this.events = events!;
-    }
-  }
-
-  private static isAggregateRoot(arg: unknown): arg is AggregateRoot {
-    return arg instanceof AggregateRoot;
-  }
+export default class EventStream<KnownEvent extends DomainEvent = DomainEvent>
+  extends Readable
+  implements ReadableStream<KnownEvent>
+{
+  // public on: (event: 'data', listener: (event: KnownEvent) => void) => this;
+  public [Symbol.asyncIterator]: () => AsyncIterableIterator<KnownEvent>;
 }

@@ -7,15 +7,15 @@ export default abstract class Repository<
 > {
   public abstract getBy(
     anIdentity: DomainObject['id']
-  ): PromiseLike<DomainObject | undefined>;
+  ): Promise<DomainObject | undefined>;
 
   public abstract save(
     anObject: DomainObject,
     aUnitOfWork?: UnitOfWork
-  ): PromiseLike<DomainObject>;
+  ): Promise<DomainObject>;
 
   public abstract delete(
     anObject: DomainObject,
     aUnitOfWork?: UnitOfWork
-  ): PromiseLike<DomainObject>;
+  ): Promise<DomainObject>;
 }

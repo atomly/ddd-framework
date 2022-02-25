@@ -1,5 +1,4 @@
 import DomainEvent from '@ddd-framework/core/DomainEvent';
-import CoreEventStore from '@ddd-framework/core/EventStore';
 import Identity from '@ddd-framework/core/Identity';
 import EventStream from './EventStream';
 
@@ -9,33 +8,20 @@ import EventStream from './EventStream';
  *
  * @extends Foo
  */
-export default abstract class EventStore
-  implements Omit<CoreEventStore, 'append'>
-{
+export default abstract class EventStore {
   /**
-   * Loads all events of a stream.
+   * Loads an event stream.
    */
-  public abstract loadEventStream<Event extends DomainEvent>(
-    anId: Identity
-  ): PromiseLike<EventStream<Event>>;
+  public abstract loadEventStream<
+    Event extends DomainEvent,
+    Id extends Identity
+  >(anEventStreamId: Id): Promise<EventStream<Event>>;
 
   /**
-   * Loads subset of events of a stream.
+   * Appends a new event(s) to an event stream.
    */
-  public abstract loadEventStream<Event extends DomainEvent>(
-    anId: Identity,
-    skipEvents: number,
-    maxCount: number
-  ): PromiseLike<EventStream<Event>>;
-
-  /**
-   * Appends new events to the stream. Should throw a concurrency
-   * exception if the stream version is not the expected version in
-   * the store.
-   */
-  public abstract appendToEventStream<Stream extends EventStream<DomainEvent>>(
-    anId: Identity,
-    version: Stream['version'],
-    events: Stream['events']
-  ): PromiseLike<void>;
+  public abstract appendToEventStream<Event extends DomainEvent>(
+    anEventStreamId: Identity,
+    anEvent: Event | Event[]
+  ): Promise<void>;
 }
