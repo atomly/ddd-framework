@@ -29,18 +29,26 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
 
   public addOrderLine(anOrderLineId: OrderLineId, aProductId: ProductId): void {
     this.apply(
-      new Events.OrderLineAdded(this.id, anOrderLineId.value, aProductId.value)
+      new Events.OrderLineAdded(
+        this.id,
+        this.version,
+        anOrderLineId.value,
+        aProductId.value
+      )
     );
   }
 
   public removeOrderLine(anOrderLineId: OrderLineId): void {
-    this.apply(new Events.OrderLineRemoved(this.id, anOrderLineId.value));
+    this.apply(
+      new Events.OrderLineRemoved(this.id, this.version, anOrderLineId.value)
+    );
   }
 
   public setShippingAddress(anAddress: Address): void {
     this.apply(
       new Events.ShippingAddressSet(
         this.id,
+        this.version,
         anAddress.country,
         anAddress.city,
         anAddress.street,
@@ -53,6 +61,7 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
     this.apply(
       new Events.BillingAddressSet(
         this.id,
+        this.version,
         anAddress.country,
         anAddress.city,
         anAddress.street,

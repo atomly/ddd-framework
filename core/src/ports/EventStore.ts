@@ -1,4 +1,4 @@
-import DomainEvent from './DomainEvent';
+import DomainEvent from '../DomainEvent';
 
 /**
  * Use the Event Store as a queue for publishing all Domain Events through

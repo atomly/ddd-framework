@@ -22,11 +22,11 @@ describe('AggregateRoot', () => {
   test('increases aggregate version', () => {
     const order = new Order();
 
-    expect(order.version).toBe(-1);
+    expect(order.version).toBe(0);
 
     order.create(OrderId.generate());
 
-    expect(order.version).toBe(0);
+    expect(order.version).toBe(1);
   });
 
   test('clear changes', () => {
@@ -47,25 +47,29 @@ describe('AggregateRoot', () => {
 
     // Pretend this comes from an EventStore:
     const stream: Events.OrderEvents[] = [
-      new Events.OrderCreated(orderId),
+      new Events.OrderCreated(orderId, 0),
       new Events.OrderLineAdded(
         orderId,
+        1,
         orderLineId.value,
         faker.datatype.uuid()
       ),
       new Events.OrderLineAdded(
         orderId,
+        2,
         faker.datatype.uuid(),
         faker.datatype.uuid()
       ),
       new Events.OrderLineAdded(
         orderId,
+        3,
         faker.datatype.uuid(),
         faker.datatype.uuid()
       ),
-      new Events.OrderLineRemoved(orderId, orderLineId.value),
+      new Events.OrderLineRemoved(orderId, 4, orderLineId.value),
       new Events.ShippingAddressSet(
         orderId,
+        5,
         faker.datatype.uuid(),
         faker.address.city(),
         faker.address.streetAddress(),
@@ -73,15 +77,16 @@ describe('AggregateRoot', () => {
       ),
       new Events.BillingAddressSet(
         orderId,
+        6,
         faker.datatype.uuid(),
         faker.address.city(),
         faker.address.streetAddress(),
         faker.address.zipCode()
       ),
-      new Events.OrderPlaced(orderId),
-      new Events.OrderShipped(orderId),
-      new Events.OrderSentForDelivery(orderId),
-      new Events.OrderDelivered(orderId)
+      new Events.OrderPlaced(orderId, 7),
+      new Events.OrderShipped(orderId, 8),
+      new Events.OrderSentForDelivery(orderId, 9),
+      new Events.OrderDelivered(orderId, 10)
     ];
 
     const order = new Order();
@@ -98,7 +103,7 @@ describe('AggregateRoot', () => {
 
     expect(order.billingAddress.notEquals(order.shippingAddress)).toBe(true);
 
-    expect(order.version).toBe(10); // Starts at -1, increases 1 per event.
+    expect(order.version).toBe(11); // Starts at 0, increases 1 per event.
   });
 
   describe('Order', () => {
@@ -175,7 +180,7 @@ describe('AggregateRoot', () => {
       expect(changes[9]).toBeInstanceOf(Events.OrderSentForDelivery);
       expect(changes[10]).toBeInstanceOf(Events.OrderDelivered);
 
-      expect(order.version).toBe(10); // Starts at -1, increases 1 per event.
+      expect(order.version).toBe(11); // Starts at 0, increases 1 per event.
     });
   });
 

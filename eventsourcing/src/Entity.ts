@@ -1,7 +1,7 @@
 import BaseEntity from '@ddd-framework/core/Entity';
 import DomainEvent from '@ddd-framework/core/DomainEvent';
 import Identity from '@ddd-framework/core/Identity';
-import { Action } from './utils/Action';
+import Action from './Action';
 
 export default abstract class Entity<
   Id extends Identity = Identity,

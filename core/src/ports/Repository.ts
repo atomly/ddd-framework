@@ -1,6 +1,6 @@
-import IdentifiedDomainObject from './IdentifiedDomainObject';
-import Identity from './Identity';
-import UnitOfWork from './UnitOfWork';
+import IdentifiedDomainObject from '../IdentifiedDomainObject';
+import Identity from '../Identity';
+import UnitOfWork from '../UnitOfWork';
 
 export default abstract class Repository<
   DomainObject extends IdentifiedDomainObject<Identity>

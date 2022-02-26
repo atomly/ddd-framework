@@ -1,4 +1,4 @@
-import Checkpoint from './Checkpoint';
+import Checkpoint from '../Checkpoint';
 
 export default abstract class CheckpointStore<
   StoredCheckpoint extends Checkpoint

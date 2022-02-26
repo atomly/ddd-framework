@@ -1,5 +1,5 @@
 import Identity from '@ddd-framework/core/Identity';
-import AggregateRoot from './AggregateRoot';
+import AggregateRoot from '../AggregateRoot';
 
 /**
  * We reconstitute an Aggregate by using its unique identity by loading storedEvents from

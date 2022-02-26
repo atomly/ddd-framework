@@ -20,10 +20,11 @@ export class OrderLineAdded extends DomainEvent<OrderId> {
 
   constructor(
     anOrderId: OrderId,
+    anOrderVersion: number,
     anOrderLineId: string,
     orderLineProductId: string
   ) {
-    super(anOrderId);
+    super(anOrderId, anOrderVersion);
     this.orderLineId = anOrderLineId;
     this.orderLineProductId = orderLineProductId;
   }
@@ -36,8 +37,12 @@ export class OrderLineAdded extends DomainEvent<OrderId> {
 export class OrderLineRemoved extends DomainEvent<OrderId> {
   public readonly orderLineId: string;
 
-  constructor(anOrderId: OrderId, anOrderLineId: string) {
-    super(anOrderId);
+  constructor(
+    anOrderId: OrderId,
+    anOrderVersion: number,
+    anOrderLineId: string
+  ) {
+    super(anOrderId, anOrderVersion);
     this.orderLineId = anOrderLineId;
   }
 
@@ -57,12 +62,13 @@ export class ShippingAddressSet extends DomainEvent<OrderId> {
 
   constructor(
     anOrderId: OrderId,
+    anOrderVersion: number,
     country: string,
     city: string,
     street: string,
     zipCode: string
   ) {
-    super(anOrderId);
+    super(anOrderId, anOrderVersion);
     this.country = country;
     this.city = city;
     this.street = street;
@@ -85,12 +91,13 @@ export class BillingAddressSet extends DomainEvent<OrderId> {
 
   constructor(
     anOrderId: OrderId,
+    anOrderVersion: number,
     country: string,
     city: string,
     street: string,
     zipCode: string
   ) {
-    super(anOrderId);
+    super(anOrderId, anOrderVersion);
     this.country = country;
     this.city = city;
     this.street = street;
