@@ -2,6 +2,24 @@ import assert from 'assert';
 import Guard from './Guard';
 import Identity from './Identity';
 
+/**
+ * TODOs:
+ *
+ * - Implement correlation IDs and causation IDs
+ *    - Causation IDs allow us to determine all the events which were directly triggered as a result of something
+ *    - Correlation IDs allow us to determine all the events which were indirectly triggered as a result of something
+ *    - Both of these IDs could be used by clients to listen to eventually consistent data, such as when creating new views, e.g. account creation
+ *    - Good source on this: https://blog.arkency.com/correlation-id-and-causation-id-in-evented-systems/
+ * - Modify domain event schema, should be something like:
+ *    - version
+ *    - id
+ *    - type
+ *    - aggregateId
+ *    - aggregateVersion
+ *    - occurredOn/timestamp
+ *    - data (event body)
+ */
+
 export type DomainEventMetadata = {
   readonly eventType: string | number;
   readonly eventVersion: string | number;

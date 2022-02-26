@@ -18,7 +18,7 @@ import DomainEvent from './DomainEvent';
 export default abstract class EventStore {
   /**
    * Append the DomainEvent to the end of the actual Event Store.
-   * It is recommended to first serialize the DomainEvent into a StoreEvent.
+   * It is recommended to first serialize the DomainEvent into a StoredEvent.
    * @param aDomainEvent - Aggregate or Entity DomainEvent.
    */
   public abstract append(aDomainEvent: DomainEvent): Promise<void>;

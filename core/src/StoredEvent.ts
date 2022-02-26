@@ -4,7 +4,7 @@ import ValueObject from './ValueObject';
  * Holds the serialized DomainEvent. They are meant to be persisted
  * into the EventStore.
  */
-export default abstract class StoreEvent<
+export default abstract class StoredEvent<
   SerializedDomainEvent
 > extends ValueObject {
   /**

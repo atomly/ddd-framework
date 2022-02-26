@@ -13,6 +13,6 @@ export { default as IdentifiedDomainObject } from './IdentifiedDomainObject';
 export { default as Identity } from './Identity';
 export { default as Observable } from './Observable';
 export { default as Repository } from './Repository';
-export { default as StoreEvent } from './StoreEvent';
+export { default as StoredEvent } from './StoredEvent';
 export { default as Uuid } from './Uuid';
 export { default as ValueObject } from './ValueObject';
