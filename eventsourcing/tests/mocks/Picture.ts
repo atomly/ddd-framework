@@ -1,5 +1,4 @@
 import Uuid from '@ddd-framework/core/Uuid';
-import Action from '../Action';
 import Entity from '../../src/Entity';
 import * as Events from './PictureEvents';
 import PictureId from './PictureId';
@@ -11,33 +10,30 @@ class ParentId extends Uuid {}
 export default class Picture extends Entity<PictureId, Events.PictureEvents> {
   public parentId: ParentId = ParentId.Null;
 
-  public id: PictureId;
+  public id: PictureId = PictureId.Null;
 
-  public size: PictureSize;
+  public size: PictureSize = PictureSize.Null;
 
-  public uri: Uri;
+  public uri: Uri = Uri.Null;
 
-  constructor(applier: Action<unknown>) {
-    super(applier);
-    this.id = PictureId.Null;
-    this.size = PictureSize.Null;
-    this.uri = Uri.Null;
+  public resize(width: number, height: number) {
+    this.apply(
+      new Events.PictureResized(this.parentId.unpack(), this.id.unpack(), {
+        pictureId: this.id.unpack(),
+        width,
+        height
+      })
+    );
   }
 
   protected when(event: Events.PictureEvents) {
     if (event instanceof Events.PictureCreated) {
-      this.parentId = event.aggregateId;
-      this.id = new PictureId(event.pictureId);
-      this.size = new PictureSize(event.width, event.height);
-      this.uri = new Uri(event.uri);
+      this.parentId = new ParentId(event.aggregateId);
+      this.id = new PictureId(event.data.pictureId);
+      this.size = new PictureSize(event.data.width, event.data.height);
+      this.uri = new Uri(event.data.uri);
     } else if (event instanceof Events.PictureResized) {
-      this.size = new PictureSize(event.width, event.height);
+      this.size = new PictureSize(event.data.width, event.data.height);
     }
-  }
-
-  public resize(width: number, height: number) {
-    this.apply(
-      new Events.PictureResized(this.parentId, this.id.value, width, height)
-    );
   }
 }

@@ -1,136 +1,152 @@
-import DomainEvent from '@ddd-framework/core/DomainEvent';
-import OrderId from './OrderId';
+import RichDomainEvent from '../../src/RichDomainEvent';
 
-export class OrderCreated extends DomainEvent<OrderId> {
+export class OrderCreated extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderCreated';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderReset extends DomainEvent<OrderId> {
+export class OrderReset extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderReset';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderLineAdded extends DomainEvent<OrderId> {
-  public readonly orderLineId: string;
-
-  public readonly orderLineProductId: string;
-
+export class OrderLineAdded extends RichDomainEvent {
   constructor(
-    anOrderId: OrderId,
-    anOrderVersion: number,
-    anOrderLineId: string,
-    orderLineProductId: string
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly orderLineId: string;
+      readonly orderLineProductId: string;
+    }
   ) {
-    super(anOrderId, anOrderVersion);
-    this.orderLineId = anOrderLineId;
-    this.orderLineProductId = orderLineProductId;
+    super();
   }
 
   public static readonly eventType = 'OrderLineAdded';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderLineRemoved extends DomainEvent<OrderId> {
-  public readonly orderLineId: string;
-
+export class OrderLineRemoved extends RichDomainEvent {
   constructor(
-    anOrderId: OrderId,
-    anOrderVersion: number,
-    anOrderLineId: string
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly orderLineId: string;
+    }
   ) {
-    super(anOrderId, anOrderVersion);
-    this.orderLineId = anOrderLineId;
+    super();
   }
 
   public static readonly eventType = 'OrderLineRemoved';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class ShippingAddressSet extends DomainEvent<OrderId> {
-  public country: string;
-
-  public city: string;
-
-  public street: string;
-
-  public zipCode: string;
-
+export class ShippingAddressSet extends RichDomainEvent {
   constructor(
-    anOrderId: OrderId,
-    anOrderVersion: number,
-    country: string,
-    city: string,
-    street: string,
-    zipCode: string
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly country: string;
+      readonly city: string;
+      readonly street: string;
+      readonly zipCode: string;
+    }
   ) {
-    super(anOrderId, anOrderVersion);
-    this.country = country;
-    this.city = city;
-    this.street = street;
-    this.zipCode = zipCode;
+    super();
   }
 
   public static readonly eventType = 'ShippingAddressSet';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class BillingAddressSet extends DomainEvent<OrderId> {
-  public country: string;
-
-  public city: string;
-
-  public street: string;
-
-  public zipCode: string;
-
+export class BillingAddressSet extends RichDomainEvent {
   constructor(
-    anOrderId: OrderId,
-    anOrderVersion: number,
-    country: string,
-    city: string,
-    street: string,
-    zipCode: string
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly country: string;
+      readonly city: string;
+      readonly street: string;
+      readonly zipCode: string;
+    }
   ) {
-    super(anOrderId, anOrderVersion);
-    this.country = country;
-    this.city = city;
-    this.street = street;
-    this.zipCode = zipCode;
+    super();
   }
 
   public static readonly eventType = 'BillingAddressSet';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderPlaced extends DomainEvent<OrderId> {
+export class OrderPlaced extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderPlaced';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderShipped extends DomainEvent<OrderId> {
+export class OrderShipped extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderShipped';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderSentForDelivery extends DomainEvent<OrderId> {
+export class OrderSentForDelivery extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderSentForDelivery';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class OrderDelivered extends DomainEvent<OrderId> {
+export class OrderDelivered extends RichDomainEvent {
+  constructor(
+    public readonly eventId: string,
+    public readonly aggregateId: string
+  ) {
+    super();
+  }
+
   public static readonly eventType = 'OrderDelivered';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
 export type OrderEvents =

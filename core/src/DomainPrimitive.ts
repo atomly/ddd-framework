@@ -1,3 +1,4 @@
+import Lodash from 'lodash';
 import ArgumentInvalidException from './exceptions/ArgumentInvalidException';
 import ValueObject from './ValueObject';
 
@@ -14,7 +15,7 @@ type Primitives = string | number | boolean | Date;
 export default abstract class DomainPrimitive<
   T extends Primitives
 > extends ValueObject {
-  constructor(public readonly value: T) {
+  constructor(protected readonly value: T) {
     super();
     this.validate();
   }
@@ -24,6 +25,10 @@ export default abstract class DomainPrimitive<
    */
   public unpack(): T {
     return this.value;
+  }
+
+  public equals(object: DomainPrimitive<T>): boolean {
+    return Lodash.isEqual(this.value, object.value);
   }
 
   /**

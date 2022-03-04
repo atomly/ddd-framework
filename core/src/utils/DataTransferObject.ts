@@ -43,7 +43,7 @@ type TransformToDTO<T> = IsFunction<T> extends true
  * Deeply converts a generic type into an anemic type by excluding any methods.
  * Useful for object/class initializers or data-centric operations.
  */
-export type DataTransferObject<
-  Type,
-  Keys extends keyof ExcludeFunctionsOf<Type> = never
-> = Omit<TransformToDTO<Type>, Keys>;
+export type DataTransferObject<Type, Keys extends keyof Type = never> = Omit<
+  TransformToDTO<Type>,
+  Keys
+>;

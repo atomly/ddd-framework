@@ -20,11 +20,16 @@ describe('Entity', () => {
     const uri = faker.random.image();
 
     picture.mutate(
-      new Events.PictureCreated(aggregateId, pictureId, width, height, uri)
+      new Events.PictureCreated(faker.datatype.uuid(), aggregateId.unpack(), {
+        pictureId,
+        width,
+        height,
+        uri
+      })
     );
 
     // Child entity should handle event:
-    expect(picture.id.value).toBe(pictureId);
+    expect(picture.id.unpack()).toBe(pictureId);
     expect(picture.size.width).toBe(width);
     expect(picture.size.height).toBe(height);
     expect(picture.uri.uri).toBe(uri);
@@ -40,17 +45,20 @@ describe('Entity', () => {
     const uri = faker.random.image();
 
     const event = new Events.PictureCreated(
-      aggregateId,
-      pictureId,
-      width,
-      height,
-      uri
+      faker.datatype.uuid(),
+      aggregateId.unpack(),
+      {
+        pictureId,
+        width,
+        height,
+        uri
+      }
     );
 
     picture.apply(event);
 
     // Child entity should handle event:
-    expect(picture.id.value).toBe(pictureId);
+    expect(picture.id.unpack()).toBe(pictureId);
     expect(picture.size.width).toBe(width);
     expect(picture.size.height).toBe(height);
     expect(picture.uri.uri).toBe(uri);
@@ -67,24 +75,33 @@ describe('Entity', () => {
     const pictureId = faker.datatype.uuid();
     const uri = faker.random.image();
 
+    let width = faker.datatype.number();
+    let height = faker.datatype.number();
+
     const pictureCreated = new Events.PictureCreated(
-      aggregateId,
-      pictureId,
-      faker.datatype.number(),
-      faker.datatype.number(),
-      uri
+      faker.datatype.uuid(),
+      aggregateId.unpack(),
+      {
+        pictureId,
+        width,
+        height,
+        uri
+      }
     );
 
     picture.apply(pictureCreated);
 
-    const width = faker.datatype.number();
-    const height = faker.datatype.number();
+    width = faker.datatype.number();
+    height = faker.datatype.number();
 
     const pictureResized = new Events.PictureResized(
-      aggregateId,
-      pictureId,
-      width,
-      height
+      faker.datatype.uuid(),
+      aggregateId.unpack(),
+      {
+        pictureId,
+        width,
+        height
+      }
     );
 
     picture.apply(pictureResized);
@@ -95,7 +112,7 @@ describe('Entity', () => {
     expect(applier.mock.calls[1][0]).toBe(pictureResized);
 
     // Child entity should handle events:
-    expect(picture.id.value).toBe(pictureId);
+    expect(picture.id.unpack()).toBe(pictureId);
     expect(picture.size.width).toBe(width);
     expect(picture.size.height).toBe(height);
     expect(picture.uri.uri).toBe(uri);
@@ -109,23 +126,29 @@ describe('Entity', () => {
       const pictureId = faker.datatype.uuid();
       const uri = faker.random.image();
 
+      let width = faker.datatype.number();
+      let height = faker.datatype.number();
+
       const pictureCreated = new Events.PictureCreated(
-        aggregateId,
-        pictureId,
-        faker.datatype.number(),
-        faker.datatype.number(),
-        uri
+        faker.datatype.uuid(),
+        aggregateId.unpack(),
+        {
+          pictureId,
+          width,
+          height,
+          uri
+        }
       );
 
       picture.apply(pictureCreated);
 
-      const width = faker.datatype.number();
-      const height = faker.datatype.number();
+      width = faker.datatype.number();
+      height = faker.datatype.number();
 
       picture.resize(width, height);
 
       // Child entity should handle events:
-      expect(picture.id.value).toBe(pictureId);
+      expect(picture.id.unpack()).toBe(pictureId);
       expect(picture.size.width).toBe(width);
       expect(picture.size.height).toBe(height);
       expect(picture.uri.uri).toBe(uri);

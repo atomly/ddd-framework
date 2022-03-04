@@ -6,7 +6,7 @@ export default class ArgumentOutOfRangeException<
 > extends Exception {
   public readonly code = 'ArgumentOutOfRangeException';
 
-  constructor(argument: keyof Class, error: string) {
-    super(`${argument} - ${error}`);
+  constructor(argument: keyof Class & PropertyKey, error: string) {
+    super(`${String(argument)} - ${error}`);
   }
 }

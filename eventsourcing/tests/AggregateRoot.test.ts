@@ -47,46 +47,38 @@ describe('AggregateRoot', () => {
 
     // Pretend this comes from an EventStore:
     const stream: Events.OrderEvents[] = [
-      new Events.OrderCreated(orderId, 0),
-      new Events.OrderLineAdded(
-        orderId,
-        1,
-        orderLineId.value,
-        faker.datatype.uuid()
-      ),
-      new Events.OrderLineAdded(
-        orderId,
-        2,
-        faker.datatype.uuid(),
-        faker.datatype.uuid()
-      ),
-      new Events.OrderLineAdded(
-        orderId,
-        3,
-        faker.datatype.uuid(),
-        faker.datatype.uuid()
-      ),
-      new Events.OrderLineRemoved(orderId, 4, orderLineId.value),
-      new Events.ShippingAddressSet(
-        orderId,
-        5,
-        faker.datatype.uuid(),
-        faker.address.city(),
-        faker.address.streetAddress(),
-        faker.address.zipCode()
-      ),
-      new Events.BillingAddressSet(
-        orderId,
-        6,
-        faker.datatype.uuid(),
-        faker.address.city(),
-        faker.address.streetAddress(),
-        faker.address.zipCode()
-      ),
-      new Events.OrderPlaced(orderId, 7),
-      new Events.OrderShipped(orderId, 8),
-      new Events.OrderSentForDelivery(orderId, 9),
-      new Events.OrderDelivered(orderId, 10)
+      new Events.OrderCreated(faker.datatype.uuid(), orderId.unpack()),
+      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
+        orderLineId: orderLineId.unpack(),
+        orderLineProductId: faker.datatype.uuid()
+      }),
+      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
+        orderLineId: faker.datatype.uuid(),
+        orderLineProductId: faker.datatype.uuid()
+      }),
+      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
+        orderLineId: faker.datatype.uuid(),
+        orderLineProductId: faker.datatype.uuid()
+      }),
+      new Events.OrderLineRemoved(faker.datatype.uuid(), orderId.unpack(), {
+        orderLineId: faker.datatype.uuid()
+      }),
+      new Events.ShippingAddressSet(faker.datatype.uuid(), orderId.unpack(), {
+        country: faker.address.country(),
+        city: faker.address.city(),
+        street: faker.address.streetAddress(),
+        zipCode: faker.address.zipCode()
+      }),
+      new Events.BillingAddressSet(faker.datatype.uuid(), orderId.unpack(), {
+        country: faker.address.country(),
+        city: faker.address.city(),
+        street: faker.address.streetAddress(),
+        zipCode: faker.address.zipCode()
+      }),
+      new Events.OrderPlaced(faker.datatype.uuid(), orderId.unpack()),
+      new Events.OrderShipped(faker.datatype.uuid(), orderId.unpack()),
+      new Events.OrderSentForDelivery(faker.datatype.uuid(), orderId.unpack()),
+      new Events.OrderDelivered(faker.datatype.uuid(), orderId.unpack())
     ];
 
     const order = new Order();
@@ -95,11 +87,11 @@ describe('AggregateRoot', () => {
 
     expect(order.id.equals(orderId)).toBe(true);
 
-    expect(order.orderLines).toHaveLength(2);
+    expect(order.orderLines).toHaveLength(3);
 
     expect(
       order.orderLines.find(({ id }) => id.equals(orderLineId))
-    ).toBeFalsy();
+    ).toBeTruthy();
 
     expect(order.billingAddress.notEquals(order.shippingAddress)).toBe(true);
 

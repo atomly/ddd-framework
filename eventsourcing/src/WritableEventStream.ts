@@ -4,6 +4,7 @@ import { ReadableStream } from './types/ReadableStream';
 
 /**
  * Event stream of Domain Events.
+ * [Node.js Streams: Everything you need to know](https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/)
  */
 export default class WritableEventStream<
     KnownEvent extends DomainEvent = DomainEvent,

@@ -6,7 +6,11 @@ export default class ArgumentInvalidException<
 > extends Exception {
   public readonly code = 'ArgumentInvalidException';
 
-  constructor(argument: keyof Class, error: string, metadata?: unknown) {
-    super(`${argument} - ${error}`, metadata);
+  constructor(
+    argument: keyof Class & PropertyKey,
+    error: string,
+    metadata?: unknown
+  ) {
+    super(`${String(argument)} - ${error}`, metadata);
   }
 }

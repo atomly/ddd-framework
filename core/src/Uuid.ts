@@ -8,7 +8,7 @@ import ArgumentInvalidException from './exceptions/ArgumentInvalidException';
 export default class Uuid extends Identity {
   protected validate(): void {
     if (!validate(this.value)) {
-      throw new ArgumentInvalidException<Uuid>('value', 'Invalid UUID format');
+      throw new ArgumentInvalidException('value', 'Invalid UUID format');
     }
   }
 

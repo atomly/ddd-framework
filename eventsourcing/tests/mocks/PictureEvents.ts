@@ -1,56 +1,40 @@
-import DomainEvent from '@ddd-framework/core/DomainEvent';
-import Uuid from '@ddd-framework/core/Uuid';
+import RichDomainEvent from '../../src/RichDomainEvent';
 
-export class PictureCreated extends DomainEvent<Uuid> {
-  public pictureId: string;
-
-  public height: number;
-
-  public width: number;
-
-  public uri: string;
-
+export class PictureCreated extends RichDomainEvent {
   constructor(
-    aggregateId: Uuid,
-    pictureId: string,
-    width: number,
-    height: number,
-    uri: string
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly pictureId: string;
+      readonly height: number;
+      readonly width: number;
+      readonly uri: string;
+    }
   ) {
-    super(aggregateId);
-    this.pictureId = pictureId;
-    this.height = height;
-    this.width = width;
-    this.uri = uri;
+    super();
   }
 
   public static readonly eventType = 'PictureCreated';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
-export class PictureResized extends DomainEvent<Uuid> {
-  public pictureId: string;
-
-  public height: number;
-
-  public width: number;
-
+export class PictureResized extends RichDomainEvent {
   constructor(
-    aggregateId: Uuid,
-    pictureId: string,
-    width: number,
-    height: number
+    public readonly eventId: string,
+    public readonly aggregateId: string,
+    public readonly data: {
+      readonly pictureId: string;
+      readonly height: number;
+      readonly width: number;
+    }
   ) {
-    super(aggregateId);
-    this.pictureId = pictureId;
-    this.height = height;
-    this.width = width;
+    super();
   }
 
   public static readonly eventType = 'PictureResized';
 
-  public static readonly eventVersion = 0;
+  public static readonly eventVersion = '0';
 }
 
 export type PictureEvents = PictureCreated | PictureResized;

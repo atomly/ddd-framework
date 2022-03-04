@@ -8,7 +8,7 @@ export default class DateValue extends DomainPrimitive<Date> {
 
   protected validate(): void {
     if (!(this.value instanceof Date) || Number.isNaN(this.value.getTime())) {
-      throw new ArgumentInvalidException<DateValue>('value', 'Invalid date');
+      throw new ArgumentInvalidException('value', 'Invalid date');
     }
   }
 

@@ -1,7 +1,10 @@
 import { ClassOf } from './utils/ClassOf';
-import DomainEvent, { DomainEventMetadata } from './DomainEvent';
+import DomainEvent from './DomainEvent';
 
-type DomainEventMetadataIndexes = Omit<DomainEventMetadata, 'occurredOn'>;
+type DomainEventMetadataIndexes = Pick<
+  DomainEvent,
+  'eventType' | 'eventVersion'
+>;
 
 type Unpack<T> = T extends (infer U)[] ? U : never;
 

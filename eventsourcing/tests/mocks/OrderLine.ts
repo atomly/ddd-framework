@@ -13,8 +13,8 @@ export default class OrderLine extends Entity<
 
   protected when(event: Events.OrderLineAdded) {
     if (event instanceof Events.OrderLineAdded) {
-      this.id = new OrderLineId(event.orderLineId);
-      this.productId = new ProductId(event.orderLineProductId);
+      this.id = new OrderLineId(event.data.orderLineId);
+      this.productId = new ProductId(event.data.orderLineProductId);
     }
   }
 }

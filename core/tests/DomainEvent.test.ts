@@ -1,67 +1,121 @@
 import faker from '@faker-js/faker';
 import DomainEvent from '../src/DomainEvent';
-import Uuid from '../src/Uuid';
-
-class OrderId extends Uuid {}
 
 describe('DomainEvent', () => {
-  const date = faker.date.recent();
-
   test('aggregateId and metadata are correctly initialized', () => {
-    class OrderCreated extends DomainEvent<OrderId> {
-      public static readonly eventType = 'OrderCreated';
-
-      public static readonly eventVersion = 0;
+    @DomainEvent.Register('OrderCreated', faker.system.semver())
+    class OrderCreated extends DomainEvent {
+      constructor(
+        public readonly eventId: string,
+        public readonly aggregateId: string,
+        public readonly aggregateVersion: string
+      ) {
+        super();
+      }
     }
 
-    const event = new OrderCreated(OrderId.Null, date);
+    const event = new OrderCreated(
+      faker.datatype.uuid(),
+      faker.datatype.uuid(),
+      faker.datatype.number().toString()
+    );
 
-    expect(event.aggregateId).toBe(OrderId.Null);
-
-    expect(event.metadata).toMatchObject({
-      eventType: OrderCreated.eventType,
-      eventVersion: OrderCreated.eventVersion,
-      occurredOn: date
-    });
+    expect(event.eventType).toBe(OrderCreated.eventType);
+    expect(event.eventVersion).toBe(OrderCreated.eventVersion);
+    expect(event.occurredOn).toBeTruthy();
   });
 
-  test('throws error if static property eventType is missing from DomainEvent', () => {
-    class OrderShipped extends DomainEvent<OrderId> {
-      // public static readonly eventType = 'OrderShipped';
+  test('throws error if static property eventType is an empty string', () => {
+    @DomainEvent.Register('', faker.system.semver())
+    class OrderShipped extends DomainEvent {
+      constructor(
+        public readonly eventId: string,
+        public readonly aggregateId: string,
+        public readonly aggregateVersion: string
+      ) {
+        super();
+      }
+    }
+
+    expect(
+      () =>
+        new OrderShipped(
+          faker.datatype.uuid(),
+          faker.datatype.uuid(),
+          faker.datatype.number().toString()
+        )
+    ).toThrow();
+  });
+
+  test('throws error if static property eventVersion is an empty string', () => {
+    @DomainEvent.Register('OrderShipped', '')
+    class OrderShipped extends DomainEvent {
+      constructor(
+        public readonly eventId: string,
+        public readonly aggregateId: string,
+        public readonly aggregateVersion: string
+      ) {
+        super();
+      }
+    }
+
+    expect(
+      () =>
+        new OrderShipped(
+          faker.datatype.uuid(),
+          faker.datatype.uuid(),
+          faker.datatype.number().toString()
+        )
+    ).toThrow();
+  });
+
+  test('throws error if static property eventType is not defined', () => {
+    class OrderShipped extends DomainEvent {
+      constructor(
+        public readonly eventId: string,
+        public readonly aggregateId: string,
+        public readonly aggregateVersion: string
+      ) {
+        super();
+      }
+
+      // public static readonly eventType = '';
 
       public static readonly eventVersion = faker.system.semver();
     }
 
-    expect(() => new OrderShipped(OrderId.Null, date)).toThrow();
+    expect(
+      () =>
+        new OrderShipped(
+          faker.datatype.uuid(),
+          faker.datatype.uuid(),
+          faker.datatype.number().toString()
+        )
+    ).toThrow();
   });
 
-  test('throws error if static property eventVersion is missing from DomainEvent', () => {
-    class OrderShipped extends DomainEvent<OrderId> {
+  test('throws error if static property eventVersion is not defined', () => {
+    class OrderShipped extends DomainEvent {
+      constructor(
+        public readonly eventId: string,
+        public readonly aggregateId: string,
+        public readonly aggregateVersion: string
+      ) {
+        super();
+      }
+
       public static readonly eventType = 'OrderShipped';
 
       // public static readonly eventVersion = faker.system.semver();
     }
 
-    expect(() => new OrderShipped(OrderId.Null, date)).toThrow();
-  });
-
-  test('throws error if static property eventType is an empty string', () => {
-    class OrderShipped extends DomainEvent<OrderId> {
-      public static readonly eventType = '';
-
-      public static readonly eventVersion = faker.system.semver();
-    }
-
-    expect(() => new OrderShipped(OrderId.Null, date)).toThrow();
-  });
-
-  test('throws error if static property eventVersion is an empty string', () => {
-    class OrderShipped extends DomainEvent<OrderId> {
-      public static readonly eventType = 'OrderShipped';
-
-      public static readonly eventVersion = '';
-    }
-
-    expect(() => new OrderShipped(OrderId.Null, date)).toThrow();
+    expect(
+      () =>
+        new OrderShipped(
+          faker.datatype.uuid(),
+          faker.datatype.uuid(),
+          faker.datatype.number().toString()
+        )
+    ).toThrow();
   });
 });
