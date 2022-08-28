@@ -3,14 +3,11 @@ import CurrencyDetails from './CurrencyDetails';
 import CurrencyMismatchException from './CurrencyMismatchException';
 
 export default class Money extends ValueObject {
-  public amount: number;
-
-  public currency: CurrencyDetails;
-
-  constructor(amount: number, currency: CurrencyDetails) {
+  constructor(
+    public readonly amount: number,
+    public readonly currency: CurrencyDetails
+  ) {
     super();
-    this.amount = amount;
-    this.currency = currency;
   }
 
   public add(summand: Money): Money {

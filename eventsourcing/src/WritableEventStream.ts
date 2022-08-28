@@ -1,5 +1,5 @@
+import { DomainEvent } from '@ddd-framework/core';
 import { Transform, TransformCallback, TransformOptions } from 'stream';
-import DomainEvent from '@ddd-framework/core/DomainEvent';
 import { ReadableStream } from './types/ReadableStream';
 
 /**
@@ -20,7 +20,8 @@ export default class WritableEventStream<
     super(WritableEventStream.getTransformOptions(transform, opts));
   }
 
-  public [Symbol.asyncIterator]: () => AsyncIterableIterator<KnownEvent>;
+  public [Symbol.asyncIterator]: () => AsyncIterableIterator<KnownEvent> =
+    super[Symbol.asyncIterator];
 
   private static getTransformOptions<
     KnownEvent extends DomainEvent = DomainEvent,

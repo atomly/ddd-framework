@@ -1,12 +1,9 @@
-import DomainEvent from '@ddd-framework/core/DomainEvent';
-import Identity from '@ddd-framework/core/Identity';
+import { DomainEvent, Identity } from '@ddd-framework/core';
 import EventStream from '../EventStream';
 
 /**
  * We load Events from the Event Store using the unique identity of the
  * Aggregate instance to be reconstituted.
- *
- * @extends Foo
  */
 export default abstract class EventStore {
   /**

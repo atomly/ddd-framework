@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import Uuid from '@ddd-framework/core/Uuid';
 import Picture from './mocks/Picture';
 import * as Events from './mocks/PictureEvents';
@@ -17,14 +17,17 @@ describe('Entity', () => {
     const pictureId = faker.datatype.uuid();
     const width = faker.datatype.number();
     const height = faker.datatype.number();
-    const uri = faker.random.image();
+    const uri = faker.image.dataUri();
 
     picture.mutate(
-      new Events.PictureCreated(faker.datatype.uuid(), aggregateId.unpack(), {
-        pictureId,
-        width,
-        height,
-        uri
+      new Events.PictureCreated({
+        aggregateId: aggregateId.unpack(),
+        data: {
+          pictureId,
+          width,
+          height,
+          uri
+        }
       })
     );
 
@@ -42,18 +45,17 @@ describe('Entity', () => {
     const pictureId = faker.datatype.uuid();
     const width = faker.datatype.number();
     const height = faker.datatype.number();
-    const uri = faker.random.image();
+    const uri = faker.image.dataUri();
 
-    const event = new Events.PictureCreated(
-      faker.datatype.uuid(),
-      aggregateId.unpack(),
-      {
+    const event = new Events.PictureCreated({
+      aggregateId: aggregateId.unpack(),
+      data: {
         pictureId,
         width,
         height,
         uri
       }
-    );
+    });
 
     picture.apply(event);
 
@@ -73,36 +75,34 @@ describe('Entity', () => {
 
     const aggregateId = new AggregateId(faker.datatype.uuid());
     const pictureId = faker.datatype.uuid();
-    const uri = faker.random.image();
+    const uri = faker.image.dataUri();
 
     let width = faker.datatype.number();
     let height = faker.datatype.number();
 
-    const pictureCreated = new Events.PictureCreated(
-      faker.datatype.uuid(),
-      aggregateId.unpack(),
-      {
+    const pictureCreated = new Events.PictureCreated({
+      aggregateId: aggregateId.unpack(),
+      data: {
         pictureId,
         width,
         height,
         uri
       }
-    );
+    });
 
     picture.apply(pictureCreated);
 
     width = faker.datatype.number();
     height = faker.datatype.number();
 
-    const pictureResized = new Events.PictureResized(
-      faker.datatype.uuid(),
-      aggregateId.unpack(),
-      {
+    const pictureResized = new Events.PictureResized({
+      aggregateId: aggregateId.unpack(),
+      data: {
         pictureId,
         width,
         height
       }
-    );
+    });
 
     picture.apply(pictureResized);
 
@@ -124,21 +124,20 @@ describe('Entity', () => {
 
       const aggregateId = new AggregateId(faker.datatype.uuid());
       const pictureId = faker.datatype.uuid();
-      const uri = faker.random.image();
+      const uri = faker.image.dataUri();
 
       let width = faker.datatype.number();
       let height = faker.datatype.number();
 
-      const pictureCreated = new Events.PictureCreated(
-        faker.datatype.uuid(),
-        aggregateId.unpack(),
-        {
+      const pictureCreated = new Events.PictureCreated({
+        aggregateId: aggregateId.unpack(),
+        data: {
           pictureId,
           width,
           height,
           uri
         }
-      );
+      });
 
       picture.apply(pictureCreated);
 

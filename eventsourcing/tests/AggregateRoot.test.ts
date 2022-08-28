@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import Address from './mocks/Address';
 import Order from './mocks/Order';
 import * as Events from './mocks/OrderEvents';
@@ -47,38 +47,56 @@ describe('AggregateRoot', () => {
 
     // Pretend this comes from an EventStore:
     const stream: Events.OrderEvents[] = [
-      new Events.OrderCreated(faker.datatype.uuid(), orderId.unpack()),
-      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
-        orderLineId: orderLineId.unpack(),
-        orderLineProductId: faker.datatype.uuid()
+      new Events.OrderCreated({ aggregateId: orderId.unpack() }),
+      new Events.OrderLineAdded({
+        aggregateId: orderId.unpack(),
+        data: {
+          orderLineId: orderLineId.unpack(),
+          orderLineProductId: faker.datatype.uuid()
+        }
       }),
-      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
-        orderLineId: faker.datatype.uuid(),
-        orderLineProductId: faker.datatype.uuid()
+      new Events.OrderLineAdded({
+        aggregateId: orderId.unpack(),
+        data: {
+          orderLineId: faker.datatype.uuid(),
+          orderLineProductId: faker.datatype.uuid()
+        }
       }),
-      new Events.OrderLineAdded(faker.datatype.uuid(), orderId.unpack(), {
-        orderLineId: faker.datatype.uuid(),
-        orderLineProductId: faker.datatype.uuid()
+      new Events.OrderLineAdded({
+        aggregateId: orderId.unpack(),
+        data: {
+          orderLineId: faker.datatype.uuid(),
+          orderLineProductId: faker.datatype.uuid()
+        }
       }),
-      new Events.OrderLineRemoved(faker.datatype.uuid(), orderId.unpack(), {
-        orderLineId: faker.datatype.uuid()
+      new Events.OrderLineRemoved({
+        aggregateId: orderId.unpack(),
+        data: {
+          orderLineId: faker.datatype.uuid()
+        }
       }),
-      new Events.ShippingAddressSet(faker.datatype.uuid(), orderId.unpack(), {
-        country: faker.address.country(),
-        city: faker.address.city(),
-        street: faker.address.streetAddress(),
-        zipCode: faker.address.zipCode()
+      new Events.ShippingAddressSet({
+        aggregateId: orderId.unpack(),
+        data: {
+          country: faker.address.country(),
+          city: faker.address.city(),
+          street: faker.address.streetAddress(),
+          zipCode: faker.address.zipCode()
+        }
       }),
-      new Events.BillingAddressSet(faker.datatype.uuid(), orderId.unpack(), {
-        country: faker.address.country(),
-        city: faker.address.city(),
-        street: faker.address.streetAddress(),
-        zipCode: faker.address.zipCode()
+      new Events.BillingAddressSet({
+        aggregateId: orderId.unpack(),
+        data: {
+          country: faker.address.country(),
+          city: faker.address.city(),
+          street: faker.address.streetAddress(),
+          zipCode: faker.address.zipCode()
+        }
       }),
-      new Events.OrderPlaced(faker.datatype.uuid(), orderId.unpack()),
-      new Events.OrderShipped(faker.datatype.uuid(), orderId.unpack()),
-      new Events.OrderSentForDelivery(faker.datatype.uuid(), orderId.unpack()),
-      new Events.OrderDelivered(faker.datatype.uuid(), orderId.unpack())
+      new Events.OrderPlaced({ aggregateId: orderId.unpack() }),
+      new Events.OrderShipped({ aggregateId: orderId.unpack() }),
+      new Events.OrderSentForDelivery({ aggregateId: orderId.unpack() }),
+      new Events.OrderDelivered({ aggregateId: orderId.unpack() })
     ];
 
     const order = new Order();

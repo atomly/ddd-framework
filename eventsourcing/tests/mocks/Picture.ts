@@ -18,10 +18,13 @@ export default class Picture extends Entity<PictureId, Events.PictureEvents> {
 
   public resize(width: number, height: number) {
     this.apply(
-      new Events.PictureResized(this.parentId.unpack(), this.id.unpack(), {
-        pictureId: this.id.unpack(),
-        width,
-        height
+      new Events.PictureResized({
+        aggregateId: this.id.unpack(),
+        data: {
+          pictureId: this.id.unpack(),
+          width,
+          height
+        }
       })
     );
   }

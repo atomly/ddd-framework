@@ -14,7 +14,7 @@ export default abstract class Command {
 
   public readonly correlationId: string;
 
-  constructor(data: CommandDto<Command>) {
+  constructor(data: CommandDto<Command> = {}) {
     this.commandId = data.commandId || Uuid.generate().unpack();
     this.causationId = data.causationId || Uuid.generate().unpack();
     this.correlationId = data.correlationId || Uuid.generate().unpack();

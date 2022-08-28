@@ -1,4 +1,3 @@
-import { Uuid } from '@ddd-framework/core';
 import assert from 'assert';
 import AggregateRoot from '../../src/AggregateRoot';
 import Address from './Address';
@@ -21,85 +20,82 @@ export default class Order extends AggregateRoot<OrderId, Events.OrderEvents> {
   public shippingAddress: Address = Address.Null;
 
   public create(anId: OrderId): void {
-    this.apply(
-      new Events.OrderCreated(Uuid.generate().unpack(), anId.unpack())
-    );
+    this.apply(new Events.OrderCreated({ aggregateId: anId.unpack() }));
   }
 
   public restart(): void {
-    this.apply(
-      new Events.OrderReset(Uuid.generate().unpack(), this.id.unpack())
-    );
+    this.apply(new Events.OrderReset({ aggregateId: this.id.unpack() }));
   }
 
   public addOrderLine(anOrderLineId: OrderLineId, aProductId: ProductId): void {
     this.apply(
-      new Events.OrderLineAdded(Uuid.generate().unpack(), this.id.unpack(), {
-        orderLineId: anOrderLineId.unpack(),
-        orderLineProductId: aProductId.unpack()
+      new Events.OrderLineAdded({
+        aggregateId: this.id.unpack(),
+        data: {
+          orderLineId: anOrderLineId.unpack(),
+          orderLineProductId: aProductId.unpack()
+        }
       })
     );
   }
 
   public removeOrderLine(anOrderLineId: OrderLineId): void {
     this.apply(
-      new Events.OrderLineRemoved(Uuid.generate().unpack(), this.id.unpack(), {
-        orderLineId: anOrderLineId.unpack()
+      new Events.OrderLineRemoved({
+        aggregateId: this.id.unpack(),
+        data: {
+          orderLineId: anOrderLineId.unpack()
+        }
       })
     );
   }
 
   public setShippingAddress(anAddress: Address): void {
     this.apply(
-      new Events.ShippingAddressSet(
-        Uuid.generate().unpack(),
-        this.id.unpack(),
-        {
+      new Events.ShippingAddressSet({
+        aggregateId: this.id.unpack(),
+        data: {
           country: anAddress.country,
           city: anAddress.city,
           street: anAddress.street,
           zipCode: anAddress.zipCode
         }
-      )
+      })
     );
   }
 
   public setBillingAddress(anAddress: Address): void {
     this.apply(
-      new Events.BillingAddressSet(Uuid.generate().unpack(), this.id.unpack(), {
-        country: anAddress.country,
-        city: anAddress.city,
-        street: anAddress.street,
-        zipCode: anAddress.zipCode
+      new Events.BillingAddressSet({
+        aggregateId: this.id.unpack(),
+        data: {
+          country: anAddress.country,
+          city: anAddress.city,
+          street: anAddress.street,
+          zipCode: anAddress.zipCode
+        }
       })
     );
   }
 
   public place(): void {
-    this.apply(
-      new Events.OrderPlaced(Uuid.generate().unpack(), this.id.unpack())
-    );
+    this.apply(new Events.OrderPlaced({ aggregateId: this.id.unpack() }));
   }
 
   public ship(): void {
-    this.apply(
-      new Events.OrderShipped(Uuid.generate().unpack(), this.id.unpack())
-    );
+    this.apply(new Events.OrderShipped({ aggregateId: this.id.unpack() }));
   }
 
   public deliver(): void {
     this.apply(
-      new Events.OrderSentForDelivery(
-        Uuid.generate().unpack(),
-        this.id.unpack()
-      )
+      new Events.OrderSentForDelivery({
+        aggregateId: this.id.unpack()
+      })
     );
   }
 
   public markOrderAsDelivered(): void {
-    this.apply(
-      new Events.OrderDelivered(Uuid.generate().unpack(), this.id.unpack())
-    );
+    this.apply(new Events.OrderDelivered({ aggregateId: this.id.unpack() }));
   }
 
   protected validateInvariants(): void {

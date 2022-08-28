@@ -5,6 +5,7 @@ export { default as AggregateRoot } from './AggregateRoot';
 export { default as DateValue } from './DateValue';
 export { default as DomainEvent } from './DomainEvent';
 export { default as DomainEventClassMap } from './DomainEventClassMap';
+export { default as DomainEventMap } from './DomainEventMap';
 export { default as DomainPrimitive } from './DomainPrimitive';
 export { default as Entity } from './Entity';
 export { default as Guard } from './Guard';

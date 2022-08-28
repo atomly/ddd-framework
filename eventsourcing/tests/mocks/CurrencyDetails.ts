@@ -3,22 +3,13 @@ import CurrencyMismatchException from './CurrencyMismatchException';
 import Money from './Money';
 
 export default class CurrencyDetails extends ValueObject {
-  public currencyCode: string;
-  public currencySymbol: string;
-  public decimalPlaces: number;
-  public isCurrencyPrefix: boolean;
-
   constructor(
-    currencyCode: string,
-    currencySymbol: string,
-    decimalPlaces: number,
-    isCurrencyPrefix: boolean
+    public readonly currencyCode: string,
+    public readonly currencySymbol: string,
+    public readonly decimalPlaces: number,
+    public readonly isCurrencyPrefix: boolean
   ) {
     super();
-    this.currencyCode = currencyCode;
-    this.currencySymbol = currencySymbol;
-    this.decimalPlaces = decimalPlaces;
-    this.isCurrencyPrefix = isCurrencyPrefix;
   }
 
   public serialize(money: Money): string {

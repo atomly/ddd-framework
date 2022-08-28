@@ -1,12 +1,22 @@
-import BaseAggregateRoot from '@ddd-framework/core/AggregateRoot';
-import DomainEvent from '@ddd-framework/core/DomainEvent';
-import Identity from '@ddd-framework/core/Identity';
+import {
+  DateValue,
+  DomainEvent,
+  IdentifiedDomainObject,
+  Identity
+} from '@ddd-framework/core';
 import Entity from './Entity';
 
 export default abstract class AggregateRoot<
   Id extends Identity = Identity,
   AggregateEvent extends DomainEvent = DomainEvent
-> extends BaseAggregateRoot<Id> {
+> extends IdentifiedDomainObject<Id> {
+  constructor(
+    public createdAt: DateValue = DateValue.now(),
+    public updatedAt?: DateValue
+  ) {
+    super();
+  }
+
   /**
    * AggreateRoot version incremented every time a state-altering command is
    * executed anywhere inside the Aggregate boundary, no matter how deep.

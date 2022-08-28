@@ -1,3 +1,4 @@
+import DomainPrimitive from '../DomainPrimitive';
 import { ExcludeFunctionsOf } from './ExcludeFunctionsOf';
 
 type IsOptional<T> = Extract<T, undefined> extends never ? false : true;
@@ -14,6 +15,7 @@ type IsValueType<T> = T extends
   | Map<any, any>
   | Date
   | Array<any>
+  | DomainPrimitive<any>
   ? true
   : false;
 
@@ -28,9 +30,14 @@ type ReplaceMap<T> = T extends Map<infer K, infer I>
     >
   : T;
 type ReplaceArray<T> = T extends Array<infer X> ? TransformToDTO<X>[] : T;
+type ReplaceDomainPrimitive<T> = T extends DomainPrimitive<
+  string | number | boolean | Date
+>
+  ? { value: ReturnType<T['unpack']> }
+  : T;
 
 type Serialize<T> = IsValueType<T> extends true
-  ? ReplaceDate<ReplaceMap<ReplaceSet<ReplaceArray<T>>>>
+  ? ReplaceDate<ReplaceMap<ReplaceSet<ReplaceArray<ReplaceDomainPrimitive<T>>>>>
   : { [K in keyof ExcludeFunctionsOf<T>]: TransformToDTO<T[K]> };
 
 type TransformToDTO<T> = IsFunction<T> extends true

@@ -1,17 +1,16 @@
-import BaseEntity from '@ddd-framework/core/Entity';
-import DomainEvent from '@ddd-framework/core/DomainEvent';
-import Identity from '@ddd-framework/core/Identity';
+import {
+  DomainEvent,
+  IdentifiedDomainObject,
+  Identity
+} from '@ddd-framework/core';
 import Action from './Action';
 
 export default abstract class Entity<
   Id extends Identity = Identity,
   EntityEvent extends DomainEvent = DomainEvent
-> extends BaseEntity<Id> {
-  private readonly applier: Action<EntityEvent>;
-
-  constructor(applier: Action<EntityEvent>) {
+> extends IdentifiedDomainObject<Id> {
+  constructor(private readonly applier: Action<EntityEvent>) {
     super();
-    this.applier = applier;
   }
 
   public apply(anEvent: EntityEvent) {
@@ -25,4 +24,6 @@ export default abstract class Entity<
   }
 
   protected abstract when(anEvent: EntityEvent): void;
+
+  protected validateInvariants?(): void;
 }

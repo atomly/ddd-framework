@@ -8,38 +8,26 @@ export class CreateOrder extends Command {}
 export class RestartOrder extends Command {}
 
 export class AddOrderLine extends Command {
-  public orderLine: OrderLine;
-
-  constructor(anOrderLine: OrderLine) {
+  constructor(public readonly anOrderLine: OrderLine) {
     super();
-    this.orderLine = anOrderLine;
   }
 }
 
 export class RemoveOrderLine extends Command {
-  public orderLineId: OrderLineId;
-
-  constructor(anOrderLineId: OrderLineId) {
+  constructor(public readonly anOrderLineId: OrderLineId) {
     super();
-    this.orderLineId = anOrderLineId;
   }
 }
 
 export class SetShippingAddress extends Command {
-  public address: Address;
-
-  constructor(anAddress: Address) {
+  constructor(public readonly anAddress: Address) {
     super();
-    this.address = anAddress;
   }
 }
 
 export class SetBillingAddress extends Command {
-  public address: Address;
-
-  constructor(anAddress: Address) {
+  constructor(public readonly anAddress: Address) {
     super();
-    this.address = anAddress;
   }
 }
 

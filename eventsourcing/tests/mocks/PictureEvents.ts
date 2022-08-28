@@ -1,17 +1,17 @@
-import RichDomainEvent from '../../src/RichDomainEvent';
+import { DomainEventDto } from '@ddd-framework/core';
+import FatDomainEvent from './FatDomainEvent';
 
-export class PictureCreated extends RichDomainEvent {
-  constructor(
-    public readonly eventId: string,
-    public readonly aggregateId: string,
-    public readonly data: {
-      readonly pictureId: string;
-      readonly height: number;
-      readonly width: number;
-      readonly uri: string;
-    }
-  ) {
-    super();
+export class PictureCreated extends FatDomainEvent {
+  public readonly data: {
+    readonly pictureId: string;
+    readonly height: number;
+    readonly width: number;
+    readonly uri: string;
+  };
+
+  constructor(event: DomainEventDto<PictureCreated>) {
+    super(event);
+    this.data = event.data;
   }
 
   public static readonly eventType = 'PictureCreated';
@@ -19,17 +19,16 @@ export class PictureCreated extends RichDomainEvent {
   public static readonly eventVersion = '0';
 }
 
-export class PictureResized extends RichDomainEvent {
-  constructor(
-    public readonly eventId: string,
-    public readonly aggregateId: string,
-    public readonly data: {
-      readonly pictureId: string;
-      readonly height: number;
-      readonly width: number;
-    }
-  ) {
-    super();
+export class PictureResized extends FatDomainEvent {
+  public readonly data: {
+    readonly pictureId: string;
+    readonly height: number;
+    readonly width: number;
+  };
+
+  constructor(event: DomainEventDto<PictureResized>) {
+    super(event);
+    this.data = event.data;
   }
 
   public static readonly eventType = 'PictureResized';

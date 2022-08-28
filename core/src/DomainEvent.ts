@@ -1,7 +1,8 @@
 import assert from 'assert';
 import Guard from './Guard';
 import Uuid from './Uuid';
-import { Newable, DomainEventDto } from './utils';
+import { DomainEventDto, MutableObject } from './utils';
+import DomainEventMap from './DomainEventMap';
 
 /**
  * Events are facts that something truly did occur in the business, they are immutable.
@@ -10,14 +11,17 @@ import { Newable, DomainEventDto } from './utils';
  *
  * Consider including whatever would be necessary to trigger the Event again.
  */
-export default abstract class DomainEvent {
+export default abstract class DomainEvent<
+  Type extends string = string,
+  Version extends string | number = string | number
+> {
   public readonly aggregateId: string;
 
   public readonly eventId: string;
 
-  public readonly eventType: string;
+  public readonly eventType: Type;
 
-  public readonly eventVersion: string | number;
+  public readonly eventVersion: Version;
 
   public readonly occurredOn: string;
 
@@ -25,26 +29,26 @@ export default abstract class DomainEvent {
 
   public readonly correlationId?: string;
 
-  constructor(data: DomainEventDto<DomainEvent>) {
+  constructor(data: DomainEventDto<DomainEvent<Type, Version>>) {
     const Constructor = this.constructor as typeof DomainEvent;
 
     assert(
       !Guard.isEmpty(Constructor.eventType),
-      `[${this.constructor.name}] Static property "eventType" needs to be defined.`
+      `[${this.constructor.name}] static property "eventType" needs to be defined.`
     );
 
     assert(
       !Guard.isEmpty(Constructor.eventVersion),
-      `[${this.constructor.name}] Static property "eventVersion" needs to be defined.`
+      `[${this.constructor.name}] static property "eventVersion" needs to be defined.`
     );
 
     this.aggregateId = data.aggregateId;
 
     this.eventId = data.eventId || Uuid.generate().unpack();
 
-    this.eventType = Constructor.eventType;
+    this.eventType = Constructor.eventType as Type;
 
-    this.eventVersion = Constructor.eventVersion;
+    this.eventVersion = Constructor.eventVersion as Version;
 
     this.occurredOn = data.occurredOn || Date.now().toString();
 
@@ -58,20 +62,32 @@ export default abstract class DomainEvent {
   public static readonly eventVersion: string | number;
 
   /**
-   * Registers the Domain Event by setting its `eventType` and `eventVersion` metadata.
+   * Registers the Domain Event in the Domain Event Map using its `eventType` and `eventVersion` properties
+   * as keys.
    */
-  // TODO: Couple this logic with the DomainEventClassMap registration in the future.
-  public static Register<ClassType extends Newable>(
-    eventType: string,
-    eventVersion: string
+  public static Register<DomainEventClass extends typeof DomainEvent>(
+    eventType: DomainEvent['eventType'],
+    eventVersion: DomainEvent['eventVersion'],
+    disableMap?: boolean
   ): ClassDecorator {
-    return function (Class: ClassType) {
-      return class extends Class {
-        public static eventType = eventType;
-        public static eventVersion = eventVersion;
-      };
+    return function (Class: DomainEventClass) {
+      (Class as MutableObject<DomainEventClass>).eventType = eventType;
+      (Class as MutableObject<DomainEventClass>).eventVersion = eventVersion;
+
+      assert(
+        !Guard.isEmpty(Class.eventType),
+        `[${Class.name}] "eventType" needs to be defined.`
+      );
+
+      assert(
+        !Guard.isEmpty(Class.eventVersion),
+        `[${Class.name}] "eventVersion" needs to be defined.`
+      );
+
+      if (!disableMap)
+        DomainEventMap.instance().add(Class as typeof DomainEvent);
+
+      return Class;
     } as ClassDecorator;
   }
-
-  // TODO: Make decorator that evaluates that the domain event has static classes
 }

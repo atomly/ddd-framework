@@ -1,9 +1,9 @@
 import {
+  DomainEvent,
   IdentifiedDomainObject,
   Identity,
   Repository
 } from '@ddd-framework/core';
-import DomainEvent from '@ddd-framework/core/DomainEvent';
 
 /**
  * Read Model Projections can be realized through a simple set of Domain Event
